@@ -71,7 +71,9 @@ public class GameModel {
 	
 	public void LoadSprites() {
 	redCell = BitmapFactory.decodeResource(resources,R.drawable.redcell);
-	//blueCell = BitmapFactory.decodeResources(resources,R.drawable.)
+	greenCell = BitmapFactory.decodeResource(resources,R.drawable.greencell);
+	yellowCell = BitmapFactory.decodeResource(resources,R.drawable.yellowcell);
+	blueCell = BitmapFactory.decodeResource(resources,R.drawable.bluecell);
 	
 	}
 
@@ -83,7 +85,7 @@ public class GameModel {
 			if(currentMillis > delay + Ticker)
 			{
 				Ticker = currentMillis;
-				int type = RandomGen(5);
+				int type = RandomGen(4);
 				switch(type)
 				{
 				case 1 : type = 0;
@@ -96,10 +98,21 @@ public class GameModel {
 				{
 					
 				int tempY = RandomGen(20);
-				myCells.add(new Cells(10,300+ tempY,redCell));
+				myCells.add(new Cells(10,300+ tempY,greenCell));
 				break;
 				}
-				
+				case 3 : type = 2;
+				{
+				int tempY = RandomGen(20);
+				myCells.add(new Cells(10,300+tempY,yellowCell));
+				break;
+				}
+				case 4 : type = 3;
+				{
+					int tempY = RandomGen(20);
+					myCells.add(new Cells(10,300+tempY,blueCell));
+					break;
+				}
 			}
 		}
 		}
