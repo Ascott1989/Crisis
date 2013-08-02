@@ -37,7 +37,7 @@ public class AndroidGameActivity extends Activity implements OnTouchListener {
 	AssetManager assetManager;
 	Boolean NoMusic = false;
 	boolean pressed = false;
-	
+	//Context mycontext;
 	
 
 	
@@ -45,7 +45,7 @@ public class AndroidGameActivity extends Activity implements OnTouchListener {
 	
 
 	public void onCreate(Bundle savedInstanceState) {
-		 //rock = BitmapFactory.decodeResource(getResources(), R.drawable.rock);
+		
 		 
 		 
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -53,8 +53,8 @@ public class AndroidGameActivity extends Activity implements OnTouchListener {
 		
 		
 		frameRate = 60;
-		model = new GameModel(getResources());
-		model.Init();
+		model = new GameModel(getResources(), this.getApplicationContext());
+		
 		display = getWindowManager().getDefaultDisplay();
 		model.setScreenHeight(display.getHeight());
 		model.setScreenWidth(display.getWidth());
@@ -67,7 +67,7 @@ public class AndroidGameActivity extends Activity implements OnTouchListener {
 		renderView = new FastRenderView(this);
 		renderView.setOnTouchListener(this);
 		setContentView(renderView);
-		
+		//model.Init();
 		
 		assetManager = getAssets();
 		/*try {
