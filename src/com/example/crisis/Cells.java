@@ -17,6 +17,7 @@ public class Cells {
 	protected RectF myRect = new RectF();
 	protected Bitmap cell;
 	
+	protected boolean sickled = false; 
 	
 	private int rand;
 	
@@ -35,7 +36,7 @@ public class Cells {
 		xPos = x;
 		yPos = y;
 		cell = cellSprite;
-		
+		sickled = false; 
 		
 		currentFrame = rand;
 		frameNo = 4;
@@ -65,6 +66,7 @@ public class Cells {
 	 }
 
 	public void spriteUpdate(long currentTimeMillis) {
+		{
 		if(currentTimeMillis > frameTicker + framePeriod){
 			frameTicker = currentTimeMillis;
 			currentFrame++;
@@ -75,10 +77,11 @@ public class Cells {
 		}
 		this.sourceRect.left = currentFrame * spriteWidth;
 		this.sourceRect.right = this.sourceRect.left + spriteWidth;
+		}
 	}
 
 	public void UpdateRect() {
-		this.myRect.set(xPos - 50, yPos - 50, xPos + 50, yPos + 50);
+		this.myRect.set(xPos - 25, yPos - 25, xPos + 25, yPos + 25);
 	}
 
 	public RectF getRect() {
@@ -106,6 +109,17 @@ public class Cells {
 	{
 		this.xPos += 1;
 	}
+	}
+	
+	public boolean checkSickled()
+	{
+		return sickled;
+	}
+	
+	public void setCollision(Bitmap sprite)
+	{
+		sickled = true; 
+		cell = sprite;
 	}
 	
 	public void selected(boolean x)

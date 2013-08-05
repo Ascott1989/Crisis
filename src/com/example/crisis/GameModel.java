@@ -38,7 +38,7 @@ public class GameModel {
 	protected ArrayList<BlockerCell> myWalls;
 	Random randomGenerator = new Random();
 	InputStreamReader inputStream;
-	
+	Cellexit iterator2;
 	
 	int rand;
 	int Oxygen;
@@ -48,6 +48,7 @@ public class GameModel {
 	char currentNum;
 	Cells currentCell;
 	Cells Temp;
+	int startX,startY;
 	Cells iterator1;
 	Context thiscontext;
 	InputStream descriptor;
@@ -59,6 +60,8 @@ public class GameModel {
 	protected Bitmap blueCell;
 	protected Bitmap greenCell;
 	protected Bitmap testblocker;
+	protected Bitmap sickleCell;
+	protected Bitmap redExit, blueExit,greenExit, yellowExit; 
 
 	GameModel(Resources res, Context context) {
 		thiscontext = context;
@@ -105,8 +108,20 @@ public class GameModel {
 			}
 			if(currentNum == '2')
 			{
-				myExits.add(new Cellexit(xPos, yPos, 1));
+				myExits.add(new Cellexit(xPos, yPos, redExit));
 				xPos+=50;
+			}
+			
+			if(currentNum == '5')
+			{
+				myExits.add(new Cellexit(xPos,yPos, blueExit));
+				xPos +=50;
+			}
+			if(currentNum == '3')
+			{
+				startX = xPos;
+				startY = yPos;
+				xPos += 50; 
 			}
 		
 		/*	switch (currentNum) {
@@ -176,6 +191,9 @@ public class GameModel {
 				R.drawable.yellowcell);
 		blueCell = BitmapFactory.decodeResource(resources, R.drawable.bluecell);
 		testblocker = BitmapFactory.decodeResource(resources,R.drawable.wall);
+		sickleCell = BitmapFactory.decodeResource(resources,R.drawable.sickecell);
+		redExit = BitmapFactory.decodeResource(resources,R.drawable.redexit);
+		blueExit = BitmapFactory.decodeResource(resources, R.drawable.blueexit);
 	}
 
 	public void populate() {
@@ -190,7 +208,7 @@ public class GameModel {
 					type = 0;
 					{
 						int tempY = RandomGen(20);
-						myCells.add(new Cells(10, 300 + tempY, redCell));
+						myCells.add(new Cells(10, startY + tempY, redCell));
 						break;
 					}
 				case 2:
@@ -198,21 +216,21 @@ public class GameModel {
 					{
 
 						int tempY = RandomGen(20);
-						myCells.add(new Cells(10, 300 + tempY, greenCell));
+						myCells.add(new Cells(10, startY + tempY, greenCell));
 						break;
 					}
 				case 3:
 					type = 2;
 					{
 						int tempY = RandomGen(20);
-						myCells.add(new Cells(10, 300 + tempY, yellowCell));
+						myCells.add(new Cells(10, startY + tempY, yellowCell));
 						break;
 					}
 				case 4:
 					type = 3;
 					{
 						int tempY = RandomGen(20);
-						myCells.add(new Cells(10, 300 + tempY, blueCell));
+						myCells.add(new Cells(10, startY + tempY, blueCell));
 						break;
 					}
 				}
@@ -227,6 +245,7 @@ public class GameModel {
 	public void draw(Canvas g) {
 		Iterator<Cells> it = myCells.iterator();
 		Iterator<BlockerCell> iter = myWalls.iterator();
+		Iterator<Cellexit> it1 = myExits.iterator();
 		
 			while(iter.hasNext())
 			{
@@ -235,6 +254,10 @@ public class GameModel {
 		
 		while (it.hasNext()) {
 			it.next().Draw(g);
+		}
+		
+		while (it1.hasNext()){
+			it1.next().Draw(g);
 		}
 		
 	
@@ -250,15 +273,30 @@ public class GameModel {
 			iterator1.spriteUpdate(System.currentTimeMillis());
 			iterator1.update();
 			Iterator<Cellexit> it2 = myExits.iterator();
+			
 			while (it2.hasNext()) {
-
-				collision = it2.next().checkCollision(iterator1);
+				iterator2 = it2.next();
+				collision = iterator2.checkCollision(iterator1);
+				iterator2.spriteUpdate(System.currentTimeMillis());
 				if (collision == true) {
 					collision = false;
-					iterator1.setPos(600, 600);
+					//iterator1.setPos(600, 600);
 					it.remove();
 					break;
 				}
+			}
+			Iterator<BlockerCell> it3 = myWalls.iterator();
+			{
+				while(it3.hasNext())
+				{
+					
+					if(it3.next().checkCollision(iterator1))
+					{
+						iterator1.setCollision(sickleCell); //Pass in sickle cell sprite.
+					}
+				
+				}
+				
 			}
 		}
 	}
@@ -285,7 +323,10 @@ public class GameModel {
 		if (currentCell == null) {
 			return;
 		} else {
+			if(currentCell.checkSickled() == false)
+			{
 			currentCell.Move(mX, mY);
+			}
 		}
 	}
 

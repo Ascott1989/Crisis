@@ -9,12 +9,18 @@ public class BlockerCell {
 	protected Bitmap wall;
 	protected RectF myRect = new RectF();
 	
+	int spriteWidth;
+	int spriteHeight;
+	
+	
 	boolean Collision = false; 
 	
 	BlockerCell(int x, int y, Bitmap test)
 	{
-	
+		
 		wall = test;
+		spriteWidth = wall.getWidth();
+		spriteHeight = wall.getHeight();
 		xPos = x;
 		yPos = y;
 	}
@@ -24,7 +30,7 @@ public class BlockerCell {
 	}
 	
 	public void UpdateRect(){
-		this.myRect.set(xPos - 50, yPos - 50, xPos + 50, yPos + 50);
+		this.myRect.set(xPos - 25, yPos - 25, xPos + 25, yPos + 25);
 	}
 	
 	public void Draw(Canvas g){
@@ -35,7 +41,7 @@ public class BlockerCell {
 	
 	
 	public boolean checkCollision(Cells cell) {
-		if (RectF.intersects(this.myRect, cell.getRect())) {
+		if (RectF.intersects(myRect, cell.getRect())) {
 			this.Collision = true;
 
 		}
