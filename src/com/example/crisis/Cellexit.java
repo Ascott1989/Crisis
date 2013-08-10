@@ -20,23 +20,23 @@ public class Cellexit {
 		Random randomGenerator = new Random();
 		private int spriteWidth;
 		private int spriteHeight;
-		
+		private int type; 
 		Bitmap cellExit;
 		protected RectF myRect = new RectF();
 		
 		boolean Collision = false; 
 		
-		public Cellexit(int xPos, int yPos, Bitmap exit){
+		public Cellexit(int xPos, int yPos, Bitmap exit, int type){
 			this.xPos = xPos;
 			this.yPos = yPos;
-			
+			this.type = type; 
 			cellExit = exit;
 			currentFrame = 0;
 			frameNo = 4;
 			spriteWidth = cellExit.getWidth() / frameNo;
 			spriteHeight = cellExit.getHeight();
 			sourceRect = new Rect(0, 0, spriteWidth, spriteHeight);
-			framePeriod = 1000 / 60;
+			framePeriod = 1000 / 10;
 			frameTicker = 0l;
 			
 			
@@ -70,6 +70,10 @@ public class Cellexit {
 		
 		public void Collision(){
 			
+		}
+		
+		public int getType(){
+			return this.type;
 		}
 		
 		public void Draw(Canvas g) {

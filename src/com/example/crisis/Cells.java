@@ -20,7 +20,7 @@ public class Cells {
 	protected boolean sickled = false; 
 	
 	private int rand;
-	
+	private int type; 
 	private Rect sourceRect;
 	private int frameNo;
 	private int currentFrame;
@@ -31,19 +31,19 @@ public class Cells {
 	private int spriteHeight;
 	boolean created = true;
 
-	public Cells(int x, int y,Bitmap cellSprite) {
+	public Cells(int x, int y,Bitmap cellSprite, int type) {
 		RandomNumber();
 		xPos = x;
 		yPos = y;
 		cell = cellSprite;
 		sickled = false; 
-		
+		this.type = type;
 		currentFrame = rand;
 		frameNo = 4;
 		spriteWidth = cell.getWidth() / frameNo;
 		spriteHeight = cell.getHeight();
 		sourceRect = new Rect(0, 0, spriteWidth, spriteHeight);
-		framePeriod = 1000 / 60;
+		framePeriod = 1000 / 10;
 		frameTicker = 0l;
 		//this.radius = radius;// set to input parameter values
 	}
@@ -88,11 +88,20 @@ public class Cells {
 		return this.myRect;
 	}
 	
+	public boolean getSickled()
+	{
+		return this.sickled; 
+	}
+	
 	public void setPos(int x, int y)
 	{
 		
 		xPos = x;
 		yPos = y;
+	}
+	
+	public int getType(){
+		return this.type;
 	}
 	
 	public boolean checkPos(int x, int y)
@@ -139,11 +148,11 @@ public class Cells {
 
 	public void Move(float x, float y) {
 		
-		xPos = x; 
-		yPos = y;
+		/*xPos = x; 
+		yPos = y;*/
 		
-		/*xPos = (int) ((xPos * 0.9) + (x * 0.1));
-		yPos = (int) ((yPos * 0.9) + (y * 0.1));*/
+		xPos = (int) ((xPos * 0.9) + (x * 0.1));
+		yPos = (int) ((yPos * 0.9) + (y * 0.1));
 		
 	}
 
