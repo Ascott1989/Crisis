@@ -43,11 +43,12 @@ public class GameModel {
 	boolean phageSelected = false; 
 	int rand;
 	int Oxygen;
-	int delay = 5000;
+	int delay = 2500;
 	long Ticker = 01;
 	long currentMillis;
 	char currentNum;
 	Cells currentCell;
+	boolean drawInfoSprite = false; 
 	Cells Temp;
 	int startX, startY;
 	Cells iterator1;
@@ -63,7 +64,7 @@ public class GameModel {
 	protected Bitmap testblocker;
 	protected Bitmap sickleCell;
 	protected Bitmap redExit, blueExit, greenExit, yellowExit, phageSprite,
-			phageIcon;
+			phageIcon, infoSprite;
 	
 	
 	int currentLevel = 1; 
@@ -159,7 +160,7 @@ public class GameModel {
 		myCells = new ArrayList<Cells>();
 		myWalls = new ArrayList<BlockerCell>();
 		
-
+		drawInfoSprite = true; 
 		LoadSprites();
 		LoadLevel();
 
@@ -185,6 +186,7 @@ public class GameModel {
 				R.drawable.yellowexit);
 		greenExit = BitmapFactory.decodeResource(resources,
 				R.drawable.greenexit);
+		infoSprite = BitmapFactory.decodeResource(resources,R.drawable.infosprite1);
 	}
 
 	public void populate() {
@@ -235,11 +237,37 @@ public class GameModel {
 	}
 
 	public void draw(Canvas g) {
-		g.drawBitmap(phageIcon, 30, 30, null);
+		
 		Iterator<Cells> it = myCells.iterator();
 		Iterator<BlockerCell> iter = myWalls.iterator();
 		Iterator<Cellexit> it1 = myExits.iterator();
-
+		
+		if(drawInfoSprite == true)
+		{
+			
+			if(currentLevel == 1)
+			{
+				g.drawBitmap(infoSprite,300,200,null);
+			}
+		
+			if(currentLevel == 2)
+			{
+				
+				g.drawBitmap(infoSprite, 300 , 200 , null);//display level 1 sprite
+				
+			
+				
+			}
+			if(currentLevel == 3)
+			{
+				
+				
+				g.drawBitmap(infoSprite, 300 , 200 , null);//display level 1 sprite
+				
+			}
+			
+		}
+		
 		while (iter.hasNext()) {
 			iter.next().Draw(g);
 		}
@@ -254,7 +282,8 @@ public class GameModel {
 		if (phageCreated == true) {
 			myPhage.Draw(g);
 		}
-		g.drawText("O2 = " + Oxygen, 40, 130, paint);
+		g.drawBitmap(phageIcon, 30, 30, null);
+		g.drawText("O2 = " + Oxygen + " / 100" , 40, 130, paint);
 
 	}
 
@@ -263,7 +292,7 @@ public class GameModel {
 		if(Oxygen >= 20 )
 		{
 		
-			if(currentLevel != 3)
+			if(currentLevel <= 3)
 			{
 				
 				Oxygen = 0;
@@ -275,10 +304,17 @@ public class GameModel {
 				myWalls = new ArrayList<BlockerCell>();
 				//clear arrays before loading level
 				//Display Inter-level educational information - wait(5000)
+				
 				currentNum = 0;
 				xPos = 25;
 				yPos = 25;
+				if(currentLevel == 3 )
+				{
+					
+					currentLevel = 0;
+				}
 				currentLevel++;
+				drawInfoSprite = true; 
 				LoadLevel();
 			
 			}
@@ -287,7 +323,8 @@ public class GameModel {
 	}
 	
 	public void Update() {
-		
+		if(drawInfoSprite == false)
+		{
 		checkStatus();
 		populate();
 		Iterator<Cells> it = myCells.iterator();
@@ -338,10 +375,12 @@ public class GameModel {
 				while (it3.hasNext()) {
 
 					if (it3.next().checkCollision(iterator1)) {
+						if(iterator1.checkcol() == false)
+							Oxygen -= 30;
 						
-						Oxygen -= 30;
 						iterator1.setCollision(sickleCell); // Pass in sickle
 															// cell sprite.
+						iterator1.collided(true);
 					}
 				}
 
@@ -351,7 +390,9 @@ public class GameModel {
 				myPhage.spriteUpdate(System.currentTimeMillis());
 			}
 		}
+		}
 	}
+	
 
 	public boolean pressed(int x, int y) 
 	{
@@ -383,6 +424,10 @@ public class GameModel {
 				}
 
 			}
+		}
+		if(drawInfoSprite == true)
+		{
+			drawInfoSprite = false; 
 		}
 
 		return false;

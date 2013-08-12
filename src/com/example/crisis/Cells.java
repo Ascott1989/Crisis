@@ -19,6 +19,8 @@ public class Cells {
 	
 	protected boolean sickled = false; 
 	
+	
+	private boolean collided;
 	private int rand;
 	private int type; 
 	private Rect sourceRect;
@@ -38,6 +40,7 @@ public class Cells {
 		cell = cellSprite;
 		sickled = false; 
 		this.type = type;
+		collided = false; 
 		currentFrame = rand;
 		frameNo = 4;
 		spriteWidth = cell.getWidth() / frameNo;
@@ -93,6 +96,16 @@ public class Cells {
 		return this.sickled; 
 	}
 	
+	public void collided(boolean col)
+	{
+		collided = col; 
+	}
+	
+	public boolean checkcol()
+	{
+		return collided; 
+	}
+	
 	public void setPos(int x, int y)
 	{
 		
@@ -119,6 +132,8 @@ public class Cells {
 		this.xPos += 1;
 	}
 	}
+	
+	
 	
 	public boolean checkSickled()
 	{
