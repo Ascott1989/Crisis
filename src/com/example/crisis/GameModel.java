@@ -64,7 +64,7 @@ public class GameModel {
 	protected Bitmap testblocker;
 	protected Bitmap sickleCell;
 	protected Bitmap redExit, blueExit, greenExit, yellowExit, phageSprite,
-			phageIcon, infoSprite;
+			phageIcon, infoSprite, level3underlay, level3overlay, level1underlay, level1overlay, level2overlay, level2underlay;
 	
 	
 	int currentLevel = 1; 
@@ -114,7 +114,7 @@ public class GameModel {
 
 			if (currentNum == '1') {
 				myWalls.add(new BlockerCell(xPos, yPos, testblocker));
-				xPos += 50;
+				xPos += 49;
 			}
 
 			if (currentNum == '#') {
@@ -123,30 +123,30 @@ public class GameModel {
 			}
 
 			if (currentNum == '0') {
-				xPos += 50;
+				xPos += 49;
 			}
 			if (currentNum == '2') {
 				myExits.add(new Cellexit(xPos, yPos, redExit, 1)); // Red Exit - 2
-				xPos += 50;
+				xPos += 49;
 			}
 
 			if (currentNum == '5') {
 				myExits.add(new Cellexit(xPos, yPos, blueExit, 4)); // Blue Exit - 5
-				xPos += 50;
+				xPos += 49;
 			}
 
 			if (currentNum == '6') {
 				myExits.add(new Cellexit(xPos, yPos, yellowExit, 3)); // Yellow Exit - 6
-				xPos += 50;
+				xPos += 49;
 			}
 			if (currentNum == '7') {
 				myExits.add(new Cellexit(xPos, yPos, greenExit, 2)); //Green Exit - 7
-				xPos += 50;
+				xPos += 49;
 			}
 			if (currentNum == '3') {
 				startX = xPos;
 				startY = yPos;
-				xPos += 50;
+				xPos += 49;
 			}
 
 		}
@@ -187,6 +187,12 @@ public class GameModel {
 		greenExit = BitmapFactory.decodeResource(resources,
 				R.drawable.greenexit);
 		infoSprite = BitmapFactory.decodeResource(resources,R.drawable.infosprite1);
+		level3overlay = BitmapFactory.decodeResource(resources,R.drawable.overlaytest);
+		level3underlay = BitmapFactory.decodeResource(resources, R.drawable.underlaytest);
+		level1overlay = BitmapFactory.decodeResource(resources, R.drawable.overlay2);
+		level1underlay = BitmapFactory.decodeResource(resources, R.drawable.underlay2);
+		level2overlay = BitmapFactory.decodeResource(resources, R.drawable.overlay3);
+		level2underlay = BitmapFactory.decodeResource(resources, R.drawable.underlay3);
 	}
 
 	public void populate() {
@@ -242,35 +248,32 @@ public class GameModel {
 		Iterator<BlockerCell> iter = myWalls.iterator();
 		Iterator<Cellexit> it1 = myExits.iterator();
 		
-		if(drawInfoSprite == true)
-		{
-			
-			if(currentLevel == 1)
-			{
-				g.drawBitmap(infoSprite,300,200,null);
-			}
+	
 		
-			if(currentLevel == 2)
-			{
-				
-				g.drawBitmap(infoSprite, 300 , 200 , null);//display level 1 sprite
-				
-			
-				
-			}
-			if(currentLevel == 3)
-			{
-				
-				
-				g.drawBitmap(infoSprite, 300 , 200 , null);//display level 1 sprite
-				
-			}
-			
-		}
+		
 		
 		while (iter.hasNext()) {
 			iter.next().Draw(g);
 		}
+		
+		if(currentLevel == 1)
+		{
+			g.drawBitmap(level1underlay,0,0,null);
+			g.drawBitmap(level1overlay,0,0,null);
+		}
+		if(currentLevel == 2)
+		{
+			g.drawBitmap(level2underlay,0,0,null);
+			g.drawBitmap(level2overlay, 0, 0,null);
+		}
+		if(currentLevel == 3)
+		{
+			g.drawBitmap(level3underlay,0,0,null);
+			g.drawBitmap(level3overlay,0,0,null);
+			
+		}
+		
+		//Change sprite overlays with level number
 
 		while (it.hasNext()) {
 			it.next().Draw(g);
@@ -282,6 +285,29 @@ public class GameModel {
 		if (phageCreated == true) {
 			myPhage.Draw(g);
 		}
+		
+		if(drawInfoSprite == true)
+		{
+			
+			if(currentLevel == 1)
+			{
+				g.drawBitmap(infoSprite,300,200,null);
+			}
+		
+			if(currentLevel == 2)
+			{
+				g.drawBitmap(infoSprite, 300 , 200 , null);//display level 1 sprite
+			}
+			if(currentLevel == 3)
+			{
+				g.drawBitmap(infoSprite, 300 , 200 , null);//display level 1 sprite
+			}
+			
+		}
+		
+		
+		
+		
 		g.drawBitmap(phageIcon, 30, 30, null);
 		g.drawText("O2 = " + Oxygen + " / 100" , 40, 130, paint);
 

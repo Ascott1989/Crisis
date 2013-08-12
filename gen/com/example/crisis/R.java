@@ -19,18 +19,24 @@ public final class R {
         public static final int greenexit=0x7f020005;
         public static final int ic_launcher=0x7f020006;
         public static final int infosprite1=0x7f020007;
-        public static final int phage=0x7f020008;
-        public static final int phageicon=0x7f020009;
-        public static final int plane=0x7f02000a;
-        public static final int redcell=0x7f02000b;
-        public static final int redexit=0x7f02000c;
-        public static final int sicklecell=0x7f02000d;
-        public static final int tank=0x7f02000e;
-        public static final int trees=0x7f02000f;
-        public static final int wall=0x7f020010;
-        public static final int water=0x7f020011;
-        public static final int yellowcell=0x7f020012;
-        public static final int yellowexit=0x7f020013;
+        public static final int overlay2=0x7f020008;
+        public static final int overlay3=0x7f020009;
+        public static final int overlaytest=0x7f02000a;
+        public static final int phage=0x7f02000b;
+        public static final int phageicon=0x7f02000c;
+        public static final int plane=0x7f02000d;
+        public static final int redcell=0x7f02000e;
+        public static final int redexit=0x7f02000f;
+        public static final int sicklecell=0x7f020010;
+        public static final int tank=0x7f020011;
+        public static final int trees=0x7f020012;
+        public static final int underlay2=0x7f020013;
+        public static final int underlay3=0x7f020014;
+        public static final int underlaytest=0x7f020015;
+        public static final int wall=0x7f020016;
+        public static final int water=0x7f020017;
+        public static final int yellowcell=0x7f020018;
+        public static final int yellowexit=0x7f020019;
     }
     public static final class id {
         public static final int menu_settings=0x7f070000;
